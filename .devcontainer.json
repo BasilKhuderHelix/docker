@@ -1,6 +1,31 @@
 {
   "name": "vwb-regenie",
-  "build": {
-    "dockerfile": "Dockerfile"
+  "dockerComposeFile": "docker-compose.yaml",
+  "service": "app",
+  "shutdownAction": "none",
+  "workspaceFolder": "/workspace",
+  "initializeCommand": "DOCKER_GID=`getent group docker | cut -d: -f3` && echo \"DOCKER_GID=${DOCKER_GID}\" > .env",
+  "postCreateCommand": "./startupscript/post-startup.sh jupyter /home/jupyter gcp true && ./startupscript/setup-docker.sh",
+  "postStartCommand": [
+    "./startupscript/remount-on-restart.sh",
+    "jupyter",
+    "/home/jupyter",
+    "gcp",
+    "true"
+  ],
+  "remoteUser": "root",
+  "customizations": {
+    "workbench": {
+      "opens": {
+        "extensions": [
+          ".ipynb", ".R", ".py",
+          ".md", ".html", ".latex", ".pdf",
+          ".bmp", ".gif", ".jpeg", ".jpg", ".png", ".svg",
+          ".csv", ".tsv", ".json", ".vl"
+        ],
+        "fileUrlSuffix": "/lab/tree/{path}",
+        "folderUrlSuffix": "/lab/tree/{path}"
+      }
+    }
   }
 }
