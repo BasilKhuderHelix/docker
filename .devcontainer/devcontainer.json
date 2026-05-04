@@ -1,0 +1,6 @@
+{
+  "name": "vwb-regenie",
+  "build": {
+    "dockerfile": "Dockerfile"
+  }
+}
